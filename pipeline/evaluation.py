@@ -1,11 +1,6 @@
 """
-
-"""
-
-"""
 Evaluation step
 """
-import os
 import xgboost as xgb
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 import numpy as np
@@ -44,4 +39,3 @@ def evaluation(X_test, y_test, model_filepath: str) -> dict:
     print(results_dict)
 
     return results_dict
-
