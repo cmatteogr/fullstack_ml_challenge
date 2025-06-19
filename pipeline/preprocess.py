@@ -209,7 +209,7 @@ def preprocess(dataset_filepath, results_folder_path, test_size: float = 0.2):
     title = "Preprocessed Train Dataset Profiling"
     report_name = 'preprocessed_train_dataset_profiling'
     report_filepath = os.path.join(results_folder_path, f"{report_name}.html")
-    generate_profiling_report(report_filepath=report_filepath, title=title, data_filepath=dataset_filepath,
+    generate_profiling_report(report_filepath=train_dataset_filepath, title=title, data_filepath=dataset_filepath,
                               minimal=False)
 
     # save the artifacts for inference
