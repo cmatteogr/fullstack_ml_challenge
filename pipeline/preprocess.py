@@ -64,7 +64,7 @@ def preprocess(dataset_filepath, results_folder_path, test_size: float = 0.2):
     # remove irrelevant columns
     dataset_df.pop('uid')
     valid_columns = list(dataset_df.columns)
-    valid_columns.pop('priceRange')
+    valid_columns =valid_columns[:-1]
 
     print('filter valid values')
     # filter by valid values

@@ -142,6 +142,7 @@ if __name__ == "__main__":
     dataset_filepath = './data/train.csv'
     dataset_df = pd.DataFrame(dataset_filepath)
     dataset_df.pop('uid')
+    dataset_df.pop('priceRange')
 
     inference_dataset_df = dataset_df.sample(100)
     inference_dataset_df.to_csv('./data/inference.csv', index=False)
