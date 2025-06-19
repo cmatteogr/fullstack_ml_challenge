@@ -1,0 +1,8 @@
+pandas~=2.3.0
+ydata-profiling~=4.16.1
+numpy~=1.26.4
+xgboost~=3.0.2
+scikit-optimize~=0.10.2
+scikit-learn~=1.7.0
+spacy~=3.8.7
+gensim~=4.3.3

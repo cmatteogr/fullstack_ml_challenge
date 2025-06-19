@@ -157,8 +157,10 @@ def preprocess(dataset_filepath, results_folder_path, test_size: float = 0.2):
     price_range_encoder.fit(y_train.to_frame())
     # apply to train
     y_train = price_range_encoder.transform(y_train.to_frame())
+    y_train = pd.DataFrame(y_train, columns=['priceRange'], index=X_train.index)
     # apply to test
     y_test = price_range_encoder.transform(y_test.to_frame())
+    y_test = pd.DataFrame(y_test, columns=['priceRange'], index=X_test.index)
 
     print('remove outliers')
     # apply outlier removal
