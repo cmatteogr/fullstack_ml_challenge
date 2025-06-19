@@ -139,6 +139,8 @@ def preprocess(dataset_filepath, results_folder_path, test_size: float = 0.2):
     max_lotSizeSqFt_q = X_train['lotSizeSqFt'].quantile(0.95)
     X_train = X_train.loc[(X_train['lotSizeSqFt'] < max_lotSizeSqFt_q)]
     X_test = X_test.loc[(X_test['lotSizeSqFt'] < max_lotSizeSqFt_q)]
+    y_train = y_train.loc[X_train.index]
+    y_test = y_test.loc[X_test.index]
 
     # apply map_numOfBathrooms transformation
     # NOTE: this could be calculated with quantiles instead in the future, that's why it happens after the split
