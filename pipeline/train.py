@@ -8,7 +8,7 @@ from skopt.space import Real, Categorical, Integer
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 import os
 
-from utils.constants import REGRESSION_MODEL_FILEPATH
+from utils.constants import REGRESSION_MODEL_FILEPATH, ARTIFACTS_FOLDER
 
 
 def train(X_train, y_train, results_folder_path: str) -> tuple:
@@ -56,7 +56,7 @@ def train(X_train, y_train, results_folder_path: str) -> tuple:
     print(results_dict)
 
     # save model
-    model_filepath = os.path.join(results_folder_path, REGRESSION_MODEL_FILEPATH)
+    model_filepath = os.path.join(ARTIFACTS_FOLDER, REGRESSION_MODEL_FILEPATH)
     best_model.save_model(model_filepath)
 
     print("training completed")

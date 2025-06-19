@@ -175,7 +175,7 @@ def preprocess(dataset_filepath, results_folder_path, test_size: float = 0.2):
     y_test = price_range_encoder.transform(y_test.to_frame())
     y_test = pd.DataFrame(y_test, columns=['priceRange'], index=X_test.index)
     # save model
-    price_range_encoder_filepath = os.path.join(results_folder_path, 'price_range_encoder.pkl')
+    price_range_encoder_filepath = os.path.join(ARTIFACTS_FOLDER, 'price_range_encoder.pkl')
     joblib.dump(price_range_encoder, price_range_encoder_filepath)
 
     print('remove outliers')
@@ -194,7 +194,7 @@ def preprocess(dataset_filepath, results_folder_path, test_size: float = 0.2):
     y_test = y_test.loc[X_test.index]
     X_test.drop(columns='outlier', inplace=True)
     # save model
-    outlier_removal_model_filepath = os.path.join(results_folder_path, 'outlier_removal_model.pkl')
+    outlier_removal_model_filepath = os.path.join(ARTIFACTS_FOLDER, 'outlier_removal_model.pkl')
     joblib.dump(price_range_encoder, outlier_removal_model_filepath)
 
     print('save dataset')
@@ -209,7 +209,7 @@ def preprocess(dataset_filepath, results_folder_path, test_size: float = 0.2):
     title = "Preprocessed Train Dataset Profiling"
     report_name = 'preprocessed_train_dataset_profiling'
     report_filepath = os.path.join(results_folder_path, f"{report_name}.html")
-    generate_profiling_report(report_filepath=train_dataset_filepath, title=title, data_filepath=dataset_filepath,
+    generate_profiling_report(report_filepath=report_filepath, title=title, data_filepath=train_dataset_filepath,
                               minimal=False)
 
     # save the artifacts for inference
