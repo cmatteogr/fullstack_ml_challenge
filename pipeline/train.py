@@ -19,7 +19,7 @@ def train(X_train, y_train, results_folder_path: str) -> tuple:
     def objective(trial):
         param = {
             'objective': 'reg:squarederror',
-            'eval_metric': 'rmse',
+            'eval_metric': 'mse',
             'device': "cuda",
             'learning_rate': trial.suggest_float('learning_rate', 1e-3, 1.0, log=True),
             'max_depth': trial.suggest_int('max_depth', 3, 30),  # Corrected range
@@ -37,7 +37,7 @@ def train(X_train, y_train, results_folder_path: str) -> tuple:
     # use optuna to find the best hyperparameters
     # save the study to have checkpoints
     # NOTE: we can set any prune and optimization method like Bayes
-    study_name = "price_regression_v3"
+    study_name = "price_regression_v4"
     storage_name = "sqlite:///{}.db".format(study_name)
     study = optuna.create_study(study_name=study_name,
                                 storage=storage_name,
