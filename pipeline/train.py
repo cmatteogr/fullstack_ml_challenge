@@ -19,7 +19,7 @@ def train(X_train, y_train, results_folder_path: str) -> tuple:
     def objective(trial):
         param = {
             'objective': 'reg:squarederror',
-            'eval_metric': 'mse',
+            'eval_metric': mean_squared_error,
             'device': "cuda",
             'learning_rate': trial.suggest_float('learning_rate', 1e-3, 1.0, log=True),
             'max_depth': trial.suggest_int('max_depth', 3, 30),  # Corrected range
