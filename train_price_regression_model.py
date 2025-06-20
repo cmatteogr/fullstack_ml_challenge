@@ -12,7 +12,7 @@ def main(dataset_filepath, results_folder: str, test_size: float = 0.2):
 
     train_results_dict, model_filepath = train(X_train, y_train, results_folder)
 
-    eval_results_dict, model_filepath = evaluation(X_test, y_test, model_filepath)
+    results_dict = evaluation(X_test, y_test, model_filepath)
 
 
 if __name__ == "__main__":

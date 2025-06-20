@@ -4,9 +4,11 @@ Evaluation step
 import xgboost as xgb
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 import numpy as np
+import os
+import json
 
 
-def evaluation(X_test, y_test, model_filepath: str) -> dict:
+def evaluation(X_test, y_test, model_filepath: str, results_folder_path:str) -> dict:
     """
     """
     print('start evaluation')
@@ -33,9 +35,13 @@ def evaluation(X_test, y_test, model_filepath: str) -> dict:
         "rmse": rmse,
         "r2": r2
     }
+    print(results_dict)
+    # Save JSON results report
+    results_json_filepath = os.path.join(results_folder_path, 'evaluation_result.json')
+    with open(results_json_filepath, 'w') as f:
+        json.dump(results_dict, f, indent=4)
 
     print("evaluation completed")
 
-    print(results_dict)
 
     return results_dict
