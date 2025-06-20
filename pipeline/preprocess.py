@@ -195,7 +195,7 @@ def preprocess(dataset_filepath, results_folder_path, test_size: float = 0.2):
     X_test.drop(columns='outlier', inplace=True)
     # save model
     outlier_removal_model_filepath = os.path.join(ARTIFACTS_FOLDER, 'outlier_removal_model.pkl')
-    joblib.dump(price_range_encoder, outlier_removal_model_filepath)
+    joblib.dump(iso_forest, outlier_removal_model_filepath)
 
     print('save dataset')
     # save dataset

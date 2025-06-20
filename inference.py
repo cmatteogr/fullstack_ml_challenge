@@ -2,7 +2,8 @@
 
 """
 import xgboost as xgb
-from pipeline.preprocess import map_garageSpaces, map_numOfPatioAndPorchFeatures, map_numOfBathrooms, map_numOfBedrooms
+from pipeline.preprocess import map_garageSpaces, map_numOfPatioAndPorchFeatures, map_numOfBathrooms, map_numOfBedrooms, \
+    extract_features_from_desc
 from utils.constants import REGRESSION_MODEL_FILEPATH
 import pandas as pd
 from sklearn.ensemble import IsolationForest
@@ -29,7 +30,7 @@ def inference(dataset_filepath: str):
 
     # check valid columns
     # TODO: when the finals columns were defined
-    dataset_df = dataset_df[preprocessing_artifacts_dict_filepath['valid_columns']]
+    dataset_df = dataset_df[preprocessing_artifacts['valid_columns']]
 
     # Validate inputs
     # filter them by valid values
@@ -66,6 +67,8 @@ def inference(dataset_filepath: str):
     features_vector_size = preprocessing_artifacts["features_vector_size"]
     # apply tokenization
     nlp = spacy.load("en_core_web_sm")
+    dataset_df['description_features'] = dataset_df[['description']].apply(
+        lambda row: extract_features_from_desc(nlp, row['description']), axis=1)
     dataset_df['description_features_tokens'] = dataset_df['description_features'].map(
         lambda fi: get_tokens_from_sentences(nlp, fi))
     sentences_tokens = [item for sublist in dataset_df['description_features_tokens'] for item in sublist]
@@ -132,20 +135,21 @@ def inference(dataset_filepath: str):
     y_pred = loaded_model.predict(dataset_df)
 
     # Inverse transform
-    y_pred_category = price_range_encoder.inverse_transform(y_pred)
+    y_pred_category = price_range_encoder.inverse_transform(list(map(lambda r: [r], y_pred)))
 
     # return predicted values
     return y_pred_category
 
-
 if __name__ == "__main__":
     dataset_filepath = './data/train.csv'
-    dataset_df = pd.DataFrame(dataset_filepath)
+    dataset_df = pd.read_csv(dataset_filepath)
     dataset_df.pop('uid')
     dataset_df.pop('priceRange')
 
     inference_dataset_df = dataset_df.sample(100)
-    inference_dataset_df.to_csv('./data/inference.csv', index=False)
+    inference_filepath = './data/inference.csv'
+    inference_dataset_df.to_csv(inference_filepath, index=False)
 
-    inference(inference_dataset_df)
+    predictions = inference(inference_filepath)
+    print(predictions)
 
